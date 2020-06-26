@@ -13,7 +13,7 @@ File Encoding         : 65001
 Date: 2018-04-23 13:17:46
 */
 
-CREATE DATABASE IF NOT EXISTS `hospital-drug`;
+#CREATE DATABASE IF NOT EXISTS `hospital-drug`;
 USE `hospital-drug`;
 
 SET FOREIGN_KEY_CHECKS=0;

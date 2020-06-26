@@ -126,6 +126,8 @@ public class UserServiceImpl implements UserService {
         return userMapper.update(userDO);
       } else {
         throw new Exception("输入的旧密码有误！");
+//        userDO.setPassword(MD5Utils.encrypt(userDO.getUsername(), userVO.getPwdNew()));
+//        return userMapper.update(userDO);
       }
     } else {
       throw new Exception("你修改的不是你登录的账号！");

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +69,26 @@ public class FileController extends BaseController {
     model.addAttribute("sysFile", sysFile);
     return "common/sysFile/edit";
   }
+
+  @GetMapping("/judge/{id}")
+  String judge(Model model, @PathVariable("id") Long id) {
+    FileDO sysFile = sysFileService.get(id);
+    String url = sysFile.getUrl();
+    String[] res = url.split("/files/");
+//    System.out.println("!@#!$!#$#!$#!$!@#\n"+sysFile.getUrl());
+    String des = "D:\\var\\uploaded_files\\" + res[1];
+    String type = judge(des);
+    System.out.println("@#$%#%#^$&^$&$&^$");
+    System.out.println(des + " " + type);
+    if(type.equals("yaopian"))
+      type = "1";
+    if(type.equals("yaoshui"))
+      type = "2";
+    System.out.println(des + " " + type);
+    model.addAttribute("type", Integer.valueOf(type));
+    return "common/file/judge";
+  }
+
 
   /**
    * 信息
@@ -158,5 +181,41 @@ public class FileController extends BaseController {
     return R.error();
   }
 
+  public static String judge(String url){
+    String py = "D:\\workspace\\python\\HIS\\predict.py";
+    String img = url;
+    Process proc;
+    HashMap<String, Double> map = new HashMap<String, Double>();
+    try {
+      proc = Runtime.getRuntime().exec("python D:\\workspace\\python\\HIS\\predict.py " + img);// 执行py文件
+      //用输入输出流来截取结果
+      BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+      String line = null;
+      int count = 0;
+      while ((line = in.readLine()) != null) {
+        if (line.equals(""))
+          continue;
+        String[] res = line.split(" ");
+//                System.out.println(line);
+        map.put(res[0], Double.valueOf(res[1].substring(res[1].indexOf("=") + 1, res[1].length() - 1)));
+
+      }
+      in.close();
+      proc.waitFor();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    Double max = Double.MIN_VALUE;
+    String type = null;
+    for (Map.Entry<String, Double> kv : map.entrySet())
+      if (kv.getValue() > max) {
+        type = kv.getKey();
+        max = kv.getValue();
+      }
+//        System.out.println(type);
+    return type;
+  }
 
 }

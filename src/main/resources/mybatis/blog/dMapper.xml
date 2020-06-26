@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="me.zbl.blog.dao.dDao">
+
+    <select id="get" resultType="me.zbl.blog.domain.dDO">
+        select `id`,`name`,`remaining`,`id_of_drug`,`latest_before`,`syt` from drug where id = #{value}
+    </select>
+
+    <select id="list" resultType="me.zbl.blog.domain.dDO">
+        select `id`,`name`,`remaining`,`idOfDrug`,`latestBefore`,`syt` from drug where id = #{value}
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from drug
+        <where>
+            <if test="id != null and id != ''"> and id = #{id} </if>
+            <if test="name != null and name != ''"> and name = #{name} </if>
+            <if test="remaining != null and remaining != ''"> and remaining = #{remaining} </if>
+            <if test="id_of_drug != null and id_of_drug != ''"> and id_of_drug = #{id_of_drug} </if>
+            <if test="latest_before != null and latest_before != ''"> and latest_before = #{latest_before} </if>
+            <if test="syt != null and syt != ''"> and syt = #{syt} </if>
+        </where>
+    </select>
+
+
+</mapper>

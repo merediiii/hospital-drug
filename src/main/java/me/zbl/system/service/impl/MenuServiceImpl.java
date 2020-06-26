@@ -35,6 +35,7 @@ public class MenuServiceImpl implements MenuService {
     List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
     List<MenuDO> menuDOs = menuMapper.listMenuByUserId(id);
     for (MenuDO sysMenuDO : menuDOs) {
+//
       Tree<MenuDO> tree = new Tree<MenuDO>();
       tree.setId(sysMenuDO.getMenuId().toString());
       tree.setParentId(sysMenuDO.getParentId().toString());
@@ -149,6 +150,7 @@ public class MenuServiceImpl implements MenuService {
     List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
     List<MenuDO> menuDOs = menuMapper.listMenuByUserId(id);
     for (MenuDO sysMenuDO : menuDOs) {
+//      System.out.println(sysMenuDO.getName());
       Tree<MenuDO> tree = new Tree<MenuDO>();
       tree.setId(sysMenuDO.getMenuId().toString());
       tree.setParentId(sysMenuDO.getParentId().toString());

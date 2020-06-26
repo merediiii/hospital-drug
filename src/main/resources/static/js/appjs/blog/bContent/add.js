@@ -37,6 +37,8 @@ function save(status) {
 				parent.reLoad();
 				$("#cid").val(r.cid);
 
+
+
 			} else {
 				parent.layer.alert(r.msg)
 			}
@@ -56,7 +58,7 @@ function validateRule() {
 			author : "请填写文章作者",
 			content : "请填写文章内容"
 		}
-	});
+	})
 }
 
 function returnList() {

@@ -59,7 +59,12 @@
                 <input id="id_password" type="password" name="password"
                        class="form-control pword m-b" value="111111"/>
                 <a id="login" class="btn btn-login btn-block">登录</a>
+<!--                <a id="sign" class="btn btn-sign btn-block">注册</a>-->
+
             </form>
+<!--            <button type="button" class="btn btn-primary" onclick="sign()">-->
+<!--                <i class="fa fa-plus hidden" aria-hidden="true"></i>注册-->
+<!--            </button>-->
         </div>
     </div>
     <div class="signup-footer">
@@ -88,12 +93,15 @@
         $("#login").on('click', function () {
             $("#signupForm").submit();
         });
+
+
         $("#id_password").keydown(function (event) {
             if (event.keyCode == 13) {
                 login();
             }
         });
         validateRule();
+
     });
 
     $.validator.setDefaults({
@@ -101,6 +109,18 @@
             login();
         }
     });
+
+    function sign() {
+        // iframe层
+        layer.open({
+            type : 2,
+            title : '注册',
+            maxmin : true,
+            shadeClose : false, // 点击遮罩关闭层
+            area : [ '800px', '520px' ],
+            content : '/sign'
+        });
+    }
 
     function login() {
         $.ajax({
@@ -119,6 +139,7 @@
             },
         });
     }
+
 
     function validateRule() {
         var icon = "<i class='fa fa-times-circle'></i> ";

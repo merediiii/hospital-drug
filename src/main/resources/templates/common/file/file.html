@@ -71,9 +71,11 @@
                                     <small>{{row.createDate}}</small>
                                 </div>
                                 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<button
-                                    class="btn btn-warning btn-xs copy" :url="row.url">复制
-                            </button>&nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-danger btn-xs"
-                                                                        @click="remove(row.id)">删除
+                                    class="btn btn-warning btn-xs copy" id="copy" :url="row.url"  onclick="copy()">选择
+                            </button>&nbsp; &nbsp; &nbsp; &nbsp;
+                                <button class="btn btn-danger btn-xs" @click="judge(row.id)">结果
+                            </button>&nbsp; &nbsp; &nbsp; &nbsp;
+                                <button class="btn btn-danger btn-xs" @click="remove(row.id)">删除
                             </button>
                             </a>
                         </div>
@@ -178,6 +180,39 @@
                 this.type = i;
                 this.offset = 0;
                 this.getData();
+            },
+            judge: function (id) {
+                layer.confirm('正在诊断', {
+                    btn: ['确定']
+                },
+                    layer.open({
+                        msg:'文件已开始预测',
+                        type: 2,
+                        title: '诊断',
+                        maxmin: true,
+                        shadeClose: false, // 点击遮罩关闭层
+                        area: ['800px', '520px'],
+                        content: '/common/sysFile/judge/' +id// iframe的url
+                    }))
+
+                //     , function () {
+                //     $.ajax({
+                //         url: "/common/sysFile/judge",
+                //         type: "post",
+                //         data: {
+                //             'id': id
+                //         },
+                //         success: function (r) {
+                //             if (r.code == 0) {
+                //                 layer.msg(r.msg);
+                //                 app.getData();
+                //             } else {
+                //                 layer.msg(r.msg);
+                //                 app.getData();
+                //             }
+                //         }
+                //     });
+                // })
             }
         },
         created: function () {
@@ -186,12 +221,34 @@
     });
 </script>
 <script type="text/javascript">
+
     var clipboard = new Clipboard('button.copy', {
         text: function (trigger) {
-            layer.msg('文件路径已复制到粘贴板');
+            layer.msg('文件已开始预测');
             return $(trigger).attr('url');
         }
     });
+
+    // function judge() {
+    //
+    //     var txtObj=document.getElementById("judge");
+    //     var text = window.clipboardData.getData("Text");
+    //     // var fID = txtObj.value;
+    //     var fID = txtObj.value;
+    //     alert(fID);
+    //
+    //     layer.open({
+    //         msg:'文件已开始预测',
+    //         type: 2,
+    //         title: '诊断',
+    //         maxmin: true,
+    //         shadeClose: false, // 点击遮罩关闭层
+    //         area: ['800px', '520px'],
+    //         content: '/common/sysFile/judge/' +fID// iframe的url
+    //     });
+    // };
+
+
     layui.use('upload', function () {
         var upload = layui.upload;
         //执行实例
