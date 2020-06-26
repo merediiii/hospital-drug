@@ -187,7 +187,7 @@ public class FileController extends BaseController {
     Process proc;
     HashMap<String, Double> map = new HashMap<String, Double>();
     try {
-      proc = Runtime.getRuntime().exec("python D:\\workspace\\python\\HIS\\predict.py " + img);// 执行py文件
+      proc = Runtime.getRuntime().exec("python D:\\workspace\\Idea\\db-hospital-drug\\src\\main\\resources\\py\\predict.py " + img);// 执行py文件
       //用输入输出流来截取结果
       BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
       String line = null;
