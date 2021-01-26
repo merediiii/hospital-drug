@@ -1,3 +1,4 @@
+转自 https://github.com/JamesZBL/db-hospital-drug
 ## 库存管理
 
 - 登记入库的药品。
